@@ -1,0 +1,21 @@
+
+
+services:
+  nextjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ElevateU-Client
+    volumes:
+      - .:/app
+    user: "${UID}:${GID}"
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    networks:
+      - laravel_network  # Use the same network as Laravel API
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080/ # Point to the Laravel service by name, not localhost
+
+networks:
+  laravel_network: {} 
